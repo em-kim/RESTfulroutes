@@ -13,13 +13,6 @@ db.once('open', function() {
     console.log('we have database blogs connected');
 });
 
-Blog.create({
-  title: "having a cocoa with Jeanine",
-  image: "https://images.unsplash.com/photo-1422913687378-69480576789e?dpr=1&auto=compress,format&fit=crop&w=1587&h=&q=80&cs=tinysrgb&crop=",
-  body: "Coldsmoke on a beautiful Sunday morning"
-
-})
-
 app.set('view engine', "ejs");
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended: true}));
@@ -36,6 +29,30 @@ app.get("/blogs", function(req, res){
 
 app.get('/', function(req, res){
   res.redirect("/blogs");
+});
+
+app.get("/blogs/new", function(req, res){
+  res.render("new.ejs");
+});
+
+app.post('/blogs', function(req, res){
+  Blog.create(req.body.blog, function(err, newBlog){
+    if(err) {
+      res.render("new.ejs");
+    } else {
+      res.redirect("/blogs");
+    }
+  });
+});
+
+app.get("/blogs/:id", function(req, res){
+  Blog.findById(req.params.id, function(err, foundBlog){
+    if(err) {
+      res.redirect('/blogs');
+    } else {
+      res.render("show.ejs", {blog: foundBlog});
+    }
+  })
 });
 
 

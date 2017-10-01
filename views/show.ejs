@@ -1,0 +1,22 @@
+<% include ./partials/header %>
+<div class="ui items">
+    
+    <div class="item">
+        <div class="ui small image">
+        <img src="<%=blog.image%>" />
+        </div>
+        <div class="content">
+          <div class="header"><%=blog.title%></div>
+          <div class="meta">
+            <span class="price"><%=blog.created %></span>
+            
+          </div>
+          <div class="description">
+            <p><%=blog.body %></p>
+            <a class="ui button basic orange" href="/blogs/<%= blog.id %>" >Read more</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<% include ./partials/footer %>
